@@ -70,12 +70,32 @@ In CI no `.env` file is used. The same three variables are stored as **repositor
 
 ### Reports (Allure)
 
+**Locally**
+
 ```bash
 npm test
 npm run allure:serve        # generate and open the report
 # or
 npm run allure:generate && npm run allure:open
 ```
+
+**In CI (GitHub Pages)**
+
+After every pipeline run, the GitHub Actions workflow generates the Allure report and publishes it to GitHub Pages automatically (also when some tests fail):
+
+🔗 **Latest report: `https://nikkalugin.github.io/OrangeHRM-Task/`**
+
+How it works:
+
+1. The `e2e` job runs the Cypress suite and generates the report with `npm run allure:generate`.
+2. The report is uploaded as the `allure-report` artifact.
+3. The `deploy` job publishes the artifact to GitHub Pages and prints the report URL in the run summary.
+
+Notes:
+
+- Each run **replaces** the previous report, so the page always shows the results of the most recent run. Report history and trends are not stored (see "Suggestions for improvement").
+- The same report can also be downloaded as a workflow artifact from the Actions run page.
+- For a fork or a new repository, enable Pages once: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
 
 ## Project structure
 
@@ -115,6 +135,10 @@ cypress/
 - The demo is a **shared public environment**: data is reset periodically and other users can change global settings. The suite sets the interface language to English during session setup, but a change in the middle of a run can still cause failures.
 - Demo data contains records referencing deleted entities (shown as "(Deleted)"); they cannot be selected in dropdowns and are skipped.
 - Chart widgets are drawn on `<canvas>`: the suite validates rendering (non-empty pixels), legend labels, and negative conditions, but tooltip text cannot be asserted through the DOM.
+- The OrangeHRM frontend occasionally throws an unhandled promise rejection
+  (`Cannot read properties of undefined (reading 'response')`), typically when an in-flight request
+  is cancelled during logout or the shared demo responds slowly. The suite ignores only this specific
+  application error via `Cypress.on('uncaught:exception')`; all other uncaught errors still fail the test.
 - Search verification covers the first page of results only.
 - Locators were written against OrangeHRM 5.x and may need adjustment after UI updates.
 - The public demo may be slow, so timeouts are raised in `cypress.config.ts`.
