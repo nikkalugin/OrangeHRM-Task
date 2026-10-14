@@ -1,0 +1,13 @@
+{
+    "chartWidgets": [
+        {
+            "title": "Employee Distribution by Sub Unit",
+            "forbiddenLabels": ["undefined", "null", "NaN", "[object Object]"]
+        },
+        {
+            "title": "Employee Distribution by Location",
+            "forbiddenLabels": ["undefined", "null", "NaN", "[object Object]"]
+        }
+    ],
+    "absentWidgets": ["Salary Overview", "Payroll Summary"]
+}

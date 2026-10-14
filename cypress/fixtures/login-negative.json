@@ -1,0 +1,32 @@
+[
+    { 
+        "title": "Wrong password value",     
+        "username": "Admin",       
+        "password": "test_pass", 
+        "error": "invalid" 
+    },
+    { 
+        "title": "Wrong username value",     
+        "username": "Test",  
+        "password": "admin123",   
+        "error": "invalid" 
+    },
+    { 
+        "title": "Both values are wrong",         
+        "username": "Test",         
+        "password": "test_pass",        
+        "error": "invalid" 
+    },
+    { 
+        "title": "Empty username value",     
+        "username": "",            
+        "password": "admin123",   
+        "error": "required" 
+    },
+    { 
+        "title": "Empty password value",     
+        "username": "Admin",       
+        "password": "",           
+        "error": "required" 
+    }
+]
