@@ -4,6 +4,7 @@ export const ROUTES = {
     users: '/web/index.php/admin/viewSystemUsers',
     addUser: '/web/index.php/admin/saveSystemUser',
     myInfo: '/web/index.php/pim/viewMyDetails',
+    currentMyInfo: '/pim/viewPersonalDetails',
     vacancies: '/web/index.php/recruitment/viewJobVacancy'
 } as const;
 

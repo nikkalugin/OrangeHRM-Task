@@ -1,12 +1,13 @@
 import { VacanciesPage } from '../../page-objects/recruitment/VacanciesPage';
 import filters from '../../fixtures/vacancy-filters.json';
+import { ROUTES } from '../../utils/constants';
 
 describe('Recruitment: Vacancies Search', () => {
     const vacanciesPage = new VacanciesPage();
 
     beforeEach(() => {
         cy.login();
-        cy.visit('/web/index.php/dashboard/index');
+        cy.visit(ROUTES.dashboard);
         vacanciesPage.visit().verifyLoaded();
     });
 

@@ -1,5 +1,5 @@
-import { BasePage } from './BasePage';
-import { ROUTES } from '../utils/constants';
+import { BasePage } from '../BasePage';
+import { ROUTES } from '../../utils/constants';
 
 export class LoginPage extends BasePage {
     protected readonly path = ROUTES.login;

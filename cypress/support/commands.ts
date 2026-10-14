@@ -1,6 +1,7 @@
-import { LoginPage } from "../page-objects/LoginPage";
-import { DashboardPage } from "../page-objects/DashboardPage";
+import { LoginPage } from "../page-objects/auth/LoginPage";
+import { DashboardPage } from "../page-objects/dashboard/DashboardPage";
 import { withCredentials } from '../utils/env';
+import { ROUTES } from "../utils/constants";
 
 Cypress.Commands.add('login', () => {
     withCredentials(({ username, password }) => {
@@ -12,7 +13,7 @@ Cypress.Commands.add('login', () => {
             },
             {
                 validate: () => {
-                    cy.visit('/web/index.php/dashboard/index');
+                    cy.visit(ROUTES.dashboard);
                     cy.url().should('include', '/dashboard');
                 },
                 cacheAcrossSpecs: true,

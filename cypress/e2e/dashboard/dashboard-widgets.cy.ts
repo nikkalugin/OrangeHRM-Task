@@ -1,4 +1,4 @@
-import { DashboardPage } from '../../page-objects/DashboardPage';
+import { DashboardPage } from '../../page-objects/dashboard/DashboardPage';
 import widgets from '../../fixtures/dashboard-widgets.json';
 
 describe('Dashboard: Chart Widgets', () => {

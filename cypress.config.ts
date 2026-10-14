@@ -17,7 +17,9 @@ export default defineConfig({
     },
     e2e: {
         baseUrl: process.env.BASE_URL,
-        defaultCommandTimeout: 10000,
+        defaultCommandTimeout: 15000,
+        pageLoadTimeout: 60000,
+        requestTimeout: 15000,
         setupNodeEvents(on, config) {
             on('task', {
                 getCredentials() {

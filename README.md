@@ -130,7 +130,7 @@ cypress/
 - **Locators.** OrangeHRM has no `data-testid`, so locators rely on `name`, `type`, `href`, stable `oxd-*` classes, and a label-based helper for form fields.
 - **Filter values come from data on the page.** Vacancy filters use values read from the table (skipping rows marked "(Deleted)") instead of hardcoded names.
 
-## Assumptions and limitations
+## Known constraints of the test environment
 
 - The demo is a **shared public environment**: data is reset periodically and other users can change global settings. The suite sets the interface language to English during session setup, but a change in the middle of a run can still cause failures.
 - Demo data contains records referencing deleted entities (shown as "(Deleted)"); they cannot be selected in dropdowns and are skipped.
@@ -144,7 +144,7 @@ cypress/
 - The public demo may be slow, so timeouts are raised in `cypress.config.ts`.
 - TODO: confirm the exact behaviour of the Username filter (partial match) used by the pre-run cleanup.
 
-## Suggestions for improvement
+## Roadmap
 
 - Run against a self-hosted OrangeHRM instance (Docker) through `BASE_URL` for a stable, isolated environment.
 - Move test data setup and cleanup to API calls to speed up runs, keeping the UI for the scenarios under test.

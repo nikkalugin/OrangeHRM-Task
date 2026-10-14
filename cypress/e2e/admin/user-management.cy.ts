@@ -3,6 +3,7 @@ import { UserFormPage } from '../../page-objects/admin/UserFormPage';
 import { SidebarMenu } from '../../page-objects/components/SidebarMenu';
 import { buildUser } from '../../utils/dataFactory';
 import { cleanupRegistry } from '../../utils/cleanupRegistry';
+import { ROUTES } from '../../utils/constants';
 
 describe('Admin: User Management', () => {
     const usersPage = new UsersPage();
@@ -10,7 +11,7 @@ describe('Admin: User Management', () => {
 
     beforeEach(() => {
         cy.login();
-        cy.visit('/web/index.php/dashboard/index');
+        cy.visit(ROUTES.dashboard);
     });
 
     afterEach(() => {
@@ -24,9 +25,10 @@ describe('Admin: User Management', () => {
         usersPage.verifyLoaded();
     });
 
-    it('Creates, verifies, edits and deletes a user', { tags: ['@smoke', '@regression'] }, () => {
-        const user = buildUser({ role: 'ESS', status: 'Enabled' });
+    it('Creates a new user and shows it in the list', { tags: ['@smoke', '@regression'] }, () => {
+        const user = buildUser();
         cleanupRegistry.addUser(user.username);
+
         userForm.createUser(user).then((employee) => {
             usersPage.verifyLoaded().searchByUsername(user.username);
             usersPage.verifyUserRow({
@@ -36,10 +38,29 @@ describe('Admin: User Management', () => {
                 employee: String(employee).split(' ')[0],
             });
         });
+    });
+
+    it('Edits role and status of an existing user', { tags: '@regression' }, () => {
+        const user = buildUser({ role: 'ESS', status: 'Enabled' });
+        cleanupRegistry.addUser(user.username);
+
+        userForm.createUser(user);
+        usersPage.verifyLoaded().searchByUsername(user.username);
+
         usersPage.openEdit(user.username);
         userForm.editRoleAndStatus(user.username, 'Admin', 'Disabled');
+
         usersPage.verifyLoaded().searchByUsername(user.username);
         usersPage.verifyUserRow({ username: user.username, role: 'Admin', status: 'Disabled' });
+    });
+
+    it('Deletes a user and removes it from the list', { tags: '@regression' }, () => {
+        const user = buildUser();
+        cleanupRegistry.addUser(user.username);
+
+        userForm.createUser(user);
+        usersPage.verifyLoaded().searchByUsername(user.username);
+
         usersPage.deleteUser(user.username);
         usersPage.searchByUsername(user.username);
         usersPage.verifyUserNotInList(user.username);

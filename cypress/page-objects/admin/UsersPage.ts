@@ -13,7 +13,7 @@ export class UsersPage extends BasePage {
     } as const;
 
     verifyLoaded(): this {
-        cy.url({ timeout: 20000 }).should('include', '/admin/viewSystemUsers');
+        cy.url().should('include', ROUTES.users);
         cy.contains('button', 'Search').should('be.visible');
         return this;
     }

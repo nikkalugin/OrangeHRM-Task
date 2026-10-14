@@ -21,7 +21,7 @@ export class AttachmentsPage extends BasePage {
 
     open(): this {
         cy.get(this.selectors.myInfoMenu).click();
-        cy.url().should('include', '/pim/viewPersonalDetails');
+        cy.url().should('include', ROUTES.currentMyInfo);
         return this;
     }
 
@@ -85,14 +85,20 @@ export class AttachmentsPage extends BasePage {
         return this;
     }
 
+    openDirectly(): this {
+        cy.visit(ROUTES.myInfo);
+        cy.url().should('include', ROUTES.currentMyInfo);
+        return this;
+    }
+
     deleteIfExists(description: string): this {
-        this.open().verifyLoaded();
+        this.openDirectly().verifyLoaded();
         cy.get('body').then(($body) => {
-        const $row = $body.find(`${this.selectors.row}:contains("${description}")`);
-        if ($row.length) {
-            $row.find(this.selectors.deleteIcon).trigger('click');
-            ConfirmDialog.confirmDelete();
-        }
+            const $row = $body.find(`${this.selectors.row}:contains("${description}")`);
+            if ($row.length) {
+                $row.find(this.selectors.deleteIcon).trigger('click');
+                ConfirmDialog.confirmDelete();
+            }
         });
         return this;
     }

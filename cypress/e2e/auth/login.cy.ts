@@ -1,7 +1,8 @@
-import { LoginPage } from '../../page-objects/LoginPage';
-import { DashboardPage } from '../../page-objects/DashboardPage';
+import { LoginPage } from '../../page-objects/auth/LoginPage';
+import { DashboardPage } from '../../page-objects/dashboard/DashboardPage';
 import { withCredentials } from '../../utils/env';
 import negativeCases from '../../fixtures/login-negative.json';
+import { ROUTES } from '../../utils/constants';
 
 describe('Login: Positive scenarios', () => {
     const loginPage = new LoginPage();
@@ -27,7 +28,7 @@ describe('Login: Positive scenarios', () => {
     });
 
     it('Does not allow access to dashboard without authentication', { tags: '@regression' }, () => {
-        cy.visit('/web/index.php/dashboard/index');
+        cy.visit(ROUTES.dashboard);
         loginPage.verifyOnLoginPage();
     });
 

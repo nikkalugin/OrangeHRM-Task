@@ -15,7 +15,7 @@ export class VacanciesPage extends BasePage {
     } as const;
 
     verifyLoaded(): this {
-        cy.url().should('include', '/recruitment/viewJobVacancy');
+        cy.url().should('include', ROUTES.vacancies);
         cy.get('.oxd-table-header-cell').should(($h) => {
             const headers = [...$h].map((el) => el.innerText.trim());
             expect(headers.some((h) => h.startsWith('Job Title')), `headers: ${headers.join(' | ')}`)
