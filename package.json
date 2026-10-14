@@ -1,6 +1,12 @@
 {
   "scripts": {
-    "cypress:open": "npx cypress open"
+    "cypress:open": "cypress open",
+    "test": "cypress run",
+    "test:smoke": "cypress run --env grepTags=@smoke",
+    "test:regression": "cypress run --env grepTags=@regression",
+    "allure:generate": "allure generate allure-results --clean -o allure-report",
+    "allure:open": "allure open allure-report",
+    "allure:serve": "allure serve allure-results"
   },
   "devDependencies": {
     "@cypress/grep": "^7.0.0",
